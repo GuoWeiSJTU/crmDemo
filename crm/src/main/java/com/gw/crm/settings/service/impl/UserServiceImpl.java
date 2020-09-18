@@ -8,6 +8,7 @@ import com.gw.crm.utils.DateTimeUtil;
 import com.gw.crm.utils.SqlSessionUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserServiceImpl implements UserService {
@@ -41,5 +42,12 @@ public class UserServiceImpl implements UserService {
 
         return user;
 
+    }
+
+    @Override
+    public List<User> getUserList() {
+        List<User> userList = userDao.getUserList();
+
+        return userList;
     }
 }
