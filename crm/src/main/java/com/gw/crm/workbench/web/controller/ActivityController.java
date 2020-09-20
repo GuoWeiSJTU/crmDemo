@@ -39,8 +39,59 @@ public class ActivityController extends HttpServlet {
             save(request,response);
         }else if ("/workbench/activity/pageList.do".equals(path)){
             pageList(request,response);
+        }else if ("/workbench/activity/delete.do".equals(path)){
+            delete(request,response);
+        }else if("/workbench/activity/getUserListAndActivity.do".equals(path)){
+            getUserListAndActivity(request,response);
+        }else if("/workbench/activity/update.do".equals(path)){
+            update(request,response);
         }
 
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("id");
+        String owner = request.getParameter("owner");
+        String name = request.getParameter("name");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String cost = request.getParameter("cost");
+        String description = request.getParameter("description");
+        //创建时间：当前系统时间
+        String editTime = DateTimeUtil.getSysTime();
+        //创建人：当前登录用户
+        String editBy = ((User)request.getSession(false).getAttribute("user")).getName();
+
+        Activity activity = new Activity();
+        activity.setId(id);
+        activity.setCost(cost);
+        activity.setStartDate(startDate);
+        activity.setOwner(owner);
+        activity.setName(name);
+        activity.setEndDate(endDate);
+        activity.setDescription(description);
+        activity.setCreateTime(editTime);
+        activity.setCreateBy(editBy);
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        boolean flag = activityService.update(activity);
+
+        PrintJson.printJsonFlag(response, flag);
+
+    }
+
+    private void getUserListAndActivity(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("id");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Map<String,Object> map = activityService.getUserListAndActivity(id);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        String[] ids = request.getParameterValues("id");
+        ActivityService activityService = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = activityService.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {
