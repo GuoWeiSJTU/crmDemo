@@ -7,6 +7,7 @@ import com.gw.crm.vo.PaginationVO;
 import com.gw.crm.workbench.dao.ActivityDao;
 import com.gw.crm.workbench.dao.ActivityRemarkDao;
 import com.gw.crm.workbench.domain.Activity;
+import com.gw.crm.workbench.domain.ActivityRemark;
 import com.gw.crm.workbench.service.ActivityService;
 
 import java.util.HashMap;
@@ -80,6 +81,46 @@ public class ActivityServiceImpl implements ActivityService {
             flag = false;
         }
         return flag;
+    }
+
+    @Override
+    public Activity detail(String id) {
+//        return activityDao.getById(id);
+            return activityDao.detail(id);
+    }
+
+    @Override
+    public List<ActivityRemark> getRemarkListByAid(String aid) {
+        List<ActivityRemark> activityRemarkList = activityRemarkDao.getReamrkListByAid(aid);
+        return activityRemarkList;
+    }
+
+    @Override
+    public Boolean deleteReamrk(String id) {
+        boolean flag = true;
+        int count = activityRemarkDao.deleteById(id);
+        if(count != 1)
+            flag = false;
+        return flag;
+    }
+
+    @Override
+    public boolean saveRemark(ActivityRemark activityRemark) {
+        boolean flag = true;
+        int count = activityRemarkDao.saveRemark(activityRemark);
+        if(count != 1)
+            flag = false;
+        return flag;
+    }
+
+    @Override
+    public boolean updateRemark(ActivityRemark activityRemark) {
+        boolean flag = true;
+        int count = activityRemarkDao.updateRemark(activityRemark);
+        if(count != 1)
+            flag = false;
+        return flag;
+
     }
 
 }

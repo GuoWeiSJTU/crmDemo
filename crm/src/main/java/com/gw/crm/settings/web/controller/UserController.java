@@ -19,6 +19,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
+        System.out.println(path);
         if("/settings/user/login.do".equals(path)){
             login(request,response);
         }

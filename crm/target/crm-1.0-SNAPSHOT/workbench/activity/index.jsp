@@ -213,6 +213,7 @@
             $("#search-owner").val($.trim($("#hidden-owner").val()));
             $("#search-startTime").val($.trim($("#hidden-startDate").val()));
             $("#search-endTime").val($.trim($("#hidden-endDate").val()));
+
             $.ajax({
                 url: "workbench/activity/pageList.do",
                 data: {
@@ -230,7 +231,7 @@
                     $.each(data.dataList, function (i, n) {
                         html += '<tr class="active">';
                         html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp\';">' + n.name + '</a></td>';
+                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.id+'\';">' + n.name + '</a></td>';
                         html += '<td>' + n.owner + '</td>';
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
